@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2732257414633745438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1036336156186170334}
+  - component: {fileID: 4299689269460844779}
+  m_Layer: 3
+  m_Name: GameAssets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1036336156186170334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732257414633745438}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4299689269460844779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732257414633745438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de8622a95a4dfb14b82ce59574f47ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pfSysMessage: {fileID: 0}
+  pfDamagePopup: {fileID: 0}
+  audioClipArray:
+  - mixer: {fileID: 24300002, guid: 695d5d0acb928804c8e099fd511c8c4a, type: 2}
+    sound: 0
+    audioClip: {fileID: 8300000, guid: cf3196bb2c701cc4bbaaa4d5ff2dcb82, type: 3}
+    volume: 0.25
+  - mixer: {fileID: 24300002, guid: 695d5d0acb928804c8e099fd511c8c4a, type: 2}
+    sound: 1
+    audioClip: {fileID: 8300000, guid: c4b0aab683a0e1443b60f8fa51b3fafb, type: 3}
+    volume: 0.25
+  - mixer: {fileID: 24300002, guid: 695d5d0acb928804c8e099fd511c8c4a, type: 2}
+    sound: 2
+    audioClip: {fileID: 8300000, guid: 0b662ea3249a9d94394f9a1a164e7b67, type: 3}
+    volume: 0.25
+  - mixer: {fileID: 24300002, guid: 695d5d0acb928804c8e099fd511c8c4a, type: 2}
+    sound: 3
+    audioClip: {fileID: 8300000, guid: bf19f67494762424992c6efd0d9eb17b, type: 3}
+    volume: 0.25
+  - mixer: {fileID: 24300002, guid: 695d5d0acb928804c8e099fd511c8c4a, type: 2}
+    sound: 4
+    audioClip: {fileID: 8300000, guid: c5ef30a50bc46da46b07b8a692c31c77, type: 3}
+    volume: 0.25
+  musicTrackArray:
+  - mixer: {fileID: 24300002, guid: 3b4d4e9a7b791474eb06bbcf9215797b, type: 2}
+    music: 0
+    audioClip: {fileID: 8300000, guid: 0864180957ea04749b3d933d47b7689c, type: 3}
+    volume: 0.25
