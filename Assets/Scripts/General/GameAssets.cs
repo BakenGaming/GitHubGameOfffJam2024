@@ -22,9 +22,18 @@ public class GameAssets : MonoBehaviour
         _i = this;    
     }
 
+    [Header("System")]
     public Transform pfSysMessage;
     public Transform pfDamagePopup;
-  
+
+    [Header("Objects")]
+    public GameObject pfPlayer;
+    public GameObject playerGhost;
+
+    [Header("Particles")]
+    public GameObject playerDeathParticles;
+    
+    [Header("Audio")]
     public SoundAudioClip[] audioClipArray;
     public MusicAudioClip[] musicTrackArray;
 

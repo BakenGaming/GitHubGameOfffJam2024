@@ -46,6 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pfSysMessage: {fileID: 0}
   pfDamagePopup: {fileID: 0}
+  pfPlayer: {fileID: 2622103966103700600, guid: c5d26459d2c61154e8326be71f93ffc6, type: 3}
+  playerGhost: {fileID: 6002719793941040570, guid: b485312c1075b814bba0dbbd7ef7b1e0, type: 3}
+  playerDeathParticles: {fileID: 634442917355259995, guid: 03c9d8fda7ce29942806cefa4a433288, type: 3}
   audioClipArray:
   - mixer: {fileID: 24300002, guid: 695d5d0acb928804c8e099fd511c8c4a, type: 2}
     sound: 0

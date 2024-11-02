@@ -24,7 +24,7 @@ public class Magnet : MonoBehaviour
             foreach (Collider2D collider in colliders)
             {
                 ICollectable collectable = collider.GetComponent<ICollectable>();
-                if (collectable != null) collectable.SetTarget(player.transform.position);
+                //if (collectable != null) collectable.SetTarget(player.transform.position);
             }
         }
 

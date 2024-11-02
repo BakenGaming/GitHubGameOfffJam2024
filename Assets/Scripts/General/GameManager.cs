@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,17 +8,49 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _i;
 
+
+    [SerializeField] private Transform spawnPoint;
+   
     private GameObject playerGO;
-    private bool isPaused;
+    private Transform currentSpawnPoint;
+    private Camera mainCam;
+    private bool isPaused, flashLightInactive;
 
     public static GameManager i { get { return _i; } }
     [SerializeField] private Transform sysMessagePoint;
 
+    private void OnEnable() 
+    {
+        DamageHandler.OnPlayerDie += ReSpawnPlayer;    
+    }
+
+    private void OnDisable() 
+    {
+        DamageHandler.OnPlayerDie -= ReSpawnPlayer;    
+    }
     private void Awake() 
     {
         _i = this;  
+        mainCam = Camera.main;
+        currentSpawnPoint = spawnPoint;
+        SpawnPlayer();
         SetupObjectPools();  
     }
+
+    private void SpawnPlayer() 
+    {
+        playerGO = Instantiate(GameAssets.i.pfPlayer, spawnPoint.position, Quaternion.identity);
+        playerGO.transform.SetParent(null);
+        playerGO.GetComponent<PlayerInputController>().Initialize();
+    }
+
+    private void ReSpawnPlayer(HazardType type)
+    {
+        playerGO = Instantiate(GameAssets.i.pfPlayer, currentSpawnPoint.position, Quaternion.identity);
+        playerGO.transform.SetParent(null);
+        playerGO.GetComponent<PlayerInputController>().Initialize();
+    }
+
 
     public void SetupObjectPools()
     {
