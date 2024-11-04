@@ -41,14 +41,14 @@ public class GameManager : MonoBehaviour
     {
         playerGO = Instantiate(GameAssets.i.pfPlayer, spawnPoint.position, Quaternion.identity);
         playerGO.transform.SetParent(null);
-        playerGO.GetComponent<PlayerInputController>().Initialize();
+        playerGO.GetComponent<GridMovement>().Initialize();
     }
 
     private void ReSpawnPlayer(HazardType type)
     {
         playerGO = Instantiate(GameAssets.i.pfPlayer, currentSpawnPoint.position, Quaternion.identity);
         playerGO.transform.SetParent(null);
-        playerGO.GetComponent<PlayerInputController>().Initialize();
+        playerGO.GetComponent<GridMovement>().Initialize();
     }
 
 

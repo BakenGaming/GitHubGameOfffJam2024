@@ -44,7 +44,7 @@ public class PlayerInputController : MonoBehaviour
         move = playerInput.PlayerControls.Move;
         move.Enable();
 
-        jump = playerInput.PlayerControls.Jump;
+        /*jump = playerInput.PlayerControls.Jump;
         jump.performed += HandleJump;
         jump.Enable();
 
@@ -62,7 +62,7 @@ public class PlayerInputController : MonoBehaviour
 
         flashLight = playerInput.PlayerControls.FlashLight;
         flashLight.canceled += HandleFlashLight;
-        flashLight.Enable();
+        flashLight.Enable();*/
 
         flashLightMask = transform.Find("FlashLight").gameObject;
         DeactivateFlashLight();

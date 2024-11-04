@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -32,6 +33,13 @@ public class GameAssets : MonoBehaviour
 
     [Header("Particles")]
     public GameObject playerDeathParticles;
+
+    [Header("UI Items")]
+    
+    public Sprite arrowSpriteUp;
+    public Sprite arrowSpriteRight;
+    public Sprite arrowSpriteDown;
+    public Sprite arrowSpriteLeft;
     
     [Header("Audio")]
     public SoundAudioClip[] audioClipArray;
