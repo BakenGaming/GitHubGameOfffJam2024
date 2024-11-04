@@ -22,6 +22,7 @@ public class StaticVariables : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsWall;
     [SerializeField] private LayerMask whatIsHazard;
+    [SerializeField] private LayerMask whatIsExitPoint;
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private LayerMask whatIsEnemy;
     [SerializeField] private LayerMask collectable;
@@ -40,6 +41,7 @@ public class StaticVariables : MonoBehaviour
     public PlayerStats GetPlayerStats(){return playerStats;}
     public LayerMask GetGroundLayer(){return whatIsGround;}
     public LayerMask GetHazardLayer(){return whatIsHazard;}
+    public LayerMask GetExitPointLayer(){return whatIsExitPoint;}
     public LayerMask GetWallLayer() { return whatIsWall; }
     public LayerMask GetPlayerLayer() { return whatIsPlayer; }
     public LayerMask GetEnemyLayer() { return whatIsEnemy; }

@@ -29,10 +29,12 @@ public class GameAssets : MonoBehaviour
 
     [Header("Objects")]
     public GameObject pfPlayer;
-    public GameObject playerGhost;
+    public GameObject pfMiningBlock;
+    public GameObject pfExit;
 
     [Header("Particles")]
     public GameObject playerDeathParticles;
+    public GameObject pfTNTExplodeParticles;
 
     [Header("UI Items")]
     

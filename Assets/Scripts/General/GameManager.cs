@@ -7,13 +7,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _i;
-
-
-    [SerializeField] private Transform spawnPoint;
-   
+    private Transform spawnPoint;
     private GameObject playerGO;
     private Transform currentSpawnPoint;
     private Camera mainCam;
+    private GridMovement gridMovement;
     private bool isPaused, flashLightInactive;
 
     public static GameManager i { get { return _i; } }
@@ -21,27 +19,37 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable() 
     {
-        DamageHandler.OnPlayerDie += ReSpawnPlayer;    
+        DamageHandler.OnPlayerDie += ReSpawnPlayer; 
+        BlockManager.OnAllBlocksSpawned += Initialize;   
     }
 
     private void OnDisable() 
     {
         DamageHandler.OnPlayerDie -= ReSpawnPlayer;    
+        BlockManager.OnAllBlocksSpawned -= Initialize;
     }
     private void Awake() 
     {
         _i = this;  
+    }
+    private void Initialize() 
+    {
         mainCam = Camera.main;
-        currentSpawnPoint = spawnPoint;
         SpawnPlayer();
         SetupObjectPools();  
+    }
+    public void SetSpawnPoint(Transform _point)
+    {
+        spawnPoint = _point;
     }
 
     private void SpawnPlayer() 
     {
         playerGO = Instantiate(GameAssets.i.pfPlayer, spawnPoint.position, Quaternion.identity);
         playerGO.transform.SetParent(null);
-        playerGO.GetComponent<GridMovement>().Initialize();
+        gridMovement = playerGO.GetComponent<GridMovement>();
+        gridMovement.Initialize();
+
     }
 
     private void ReSpawnPlayer(HazardType type)
@@ -67,6 +75,8 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame(){if(isPaused) return; else isPaused = true;}
     public void UnPauseGame(){if(isPaused) isPaused = false; else return;}
+
+    public GridMovement GetMovementScript(){return gridMovement;}
     
     public Transform GetSysMessagePoint(){ return sysMessagePoint;}
     public GameObject GetPlayerGO() { return playerGO; }

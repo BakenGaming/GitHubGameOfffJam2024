@@ -47,8 +47,10 @@ MonoBehaviour:
   pfSysMessage: {fileID: 0}
   pfDamagePopup: {fileID: 0}
   pfPlayer: {fileID: 3009887147886051803, guid: c9281dcfc50f17348ac46676408afa07, type: 3}
-  playerGhost: {fileID: 6002719793941040570, guid: b485312c1075b814bba0dbbd7ef7b1e0, type: 3}
+  pfMiningBlock: {fileID: 8388475690763705813, guid: 1808edd87304e7f499425033ccaaaa05, type: 3}
+  pfExit: {fileID: 4567199203398592329, guid: fe5b74a5370734c41be9386b0e795433, type: 3}
   playerDeathParticles: {fileID: 634442917355259995, guid: 03c9d8fda7ce29942806cefa4a433288, type: 3}
+  pfTNTExplodeParticles: {fileID: 866489567310151388, guid: 8d75e429b4a87a44eb3d8826ca4ea26a, type: 3}
   arrowSpriteUp: {fileID: 21300000, guid: ea7b415550195974093bf2d7fb387e4e, type: 3}
   arrowSpriteRight: {fileID: 21300000, guid: dee212003cd2c0e479f40d647d952b3c, type: 3}
   arrowSpriteDown: {fileID: 21300000, guid: a7537c0f6eb348b4397898305b1c310d, type: 3}

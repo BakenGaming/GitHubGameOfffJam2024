@@ -20,8 +20,8 @@ TagManager:
   - Enemy
   - Ground
   - Hazard
-  - 
-  - 
+  - Spawnpoint
+  - Exit
   - 
   - 
   - 
@@ -49,4 +49,7 @@ TagManager:
     locked: 0
   - name: Hazard
     uniqueID: 3183496369
+    locked: 0
+  - name: Ground
+    uniqueID: 914893019
     locked: 0

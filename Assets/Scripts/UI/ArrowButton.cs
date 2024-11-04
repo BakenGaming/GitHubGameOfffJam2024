@@ -10,7 +10,6 @@ public class ArrowButton : MonoBehaviour
 
     public void OnArrowClick()
     {
-        Debug.Log(direction);
         OnArrowClicked?.Invoke(direction);
     }
 }
