@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     private void Initialize() 
     {
         mainCam = Camera.main;
+        dynamiteCount = StaticVariables.i.GetGameStats().dynamiteCount;
         SpawnPlayer();
         SetupObjectPools();  
     }

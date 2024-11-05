@@ -5,18 +5,17 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 [Serializable]
-public class PlayerStats
+public class GameStats
 {
     public float speed;
-    public float jumpPower;
-    public float dashForce;
-    public float wallSlidingSpeed;
+    public int dynamiteCount;
+    public float movementDelay;
 }
 public class StaticVariables : MonoBehaviour
 {
     public static StaticVariables i;
     [Header("Player Stats")]
-    [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private GameStats gameStats;
 
     [Header("Layer Masks")]
     [SerializeField] private LayerMask whatIsGround;
@@ -38,7 +37,7 @@ public class StaticVariables : MonoBehaviour
         i = this;
     }
 
-    public PlayerStats GetPlayerStats(){return playerStats;}
+    public GameStats GetGameStats(){return gameStats;}
     public LayerMask GetGroundLayer(){return whatIsGround;}
     public LayerMask GetHazardLayer(){return whatIsHazard;}
     public LayerMask GetExitPointLayer(){return whatIsExitPoint;}

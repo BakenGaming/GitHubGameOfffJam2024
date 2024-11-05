@@ -18,7 +18,6 @@ public class GridMovement : MonoBehaviour
     private Transform movePoint;
     private Vector3 startingPoint, playerMovePosition;
     private List<MoveDirections> movementSequence;
-    private float movementDelay = 1f, lerpSpeed = 6f;
     private int index = 0;
 
     public void Initialize() 
@@ -122,7 +121,7 @@ public class GridMovement : MonoBehaviour
             explodeable = collider.gameObject.GetComponent<IExplodeable>();
             if(explodeable != null) explodeable.ActivateTNT();
             
-            yield return new WaitForSeconds(movementDelay);
+            yield return new WaitForSeconds(StaticVariables.i.GetGameStats().movementDelay);
         }
         OnSequenceExecuted?.Invoke();
     }
@@ -168,7 +167,7 @@ public class GridMovement : MonoBehaviour
         }
         if(isMoving)
         {
-            transform.position = Vector2.Lerp(transform.position, playerMovePosition, lerpSpeed * Time.deltaTime);
+            transform.position = Vector2.Lerp(transform.position, playerMovePosition, StaticVariables.i.GetGameStats().speed * Time.deltaTime);
             if(Vector2.Distance(transform.position, playerMovePosition) < .05f)
             {
                 isMoving = false;
@@ -250,9 +249,13 @@ public class GridMovement : MonoBehaviour
     {
         IObject iObject = other.GetComponent<IObject>();
         if (iObject.GetObjectType() == ObjectType.key)
+        {
+            Destroy(other.gameObject);
             OnKeyCollected?.Invoke(ObjectType.key);
+        }
         if (iObject.GetObjectType() == ObjectType.TNT)
         {
+            Destroy(other.gameObject);
             GameManager.i.UpdateDynamiteCount(true);
             OnTNTCollected?.Invoke(ObjectType.TNT);
         }
