@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
@@ -11,24 +12,28 @@ public class UIController : MonoBehaviour
     public static event Action OnSequenceComplete;
     public static event Action OnSequenceReset;
     public static event Action OnCheckDirections;
-    [SerializeField] private GameObject sequencePanel;
-    [SerializeField] private GameObject cheatPrompt;
+    [SerializeField] private GameObject sequencePanel, cheatPrompt, keyImage;
+    [SerializeField] private TextMeshProUGUI scoreText, dynamiteText;
     [SerializeField] private GameObject[] sequenceImages;
     [SerializeField] private GameObject upArrow, downArrow, leftArrow, rightArrow;
     private int sequencePositionIndex=0, cheatLevel=0;
     private float moveInputTime=.5f, moveInputTimer=0f;
-    private bool canAddDirection = true, sequenceComplete = false, canCheat = true, isCheating = false;
+    private bool canAddDirection = true, sequenceComplete = false, canCheat = true, isCheating = false, playerSpawned=false;
 
     private void OnEnable() 
     {
         ArrowButton.OnArrowClicked += SelectDirection;  
         BlockManager.OnCheatComplete += EndCheat;  
+        GameManager.OnPlayerSpawned += Initialize;
+        GridMovement.OnKeyCollected += CollectItem;
     }
 
     private void OnDisable() 
     {
         ArrowButton.OnArrowClicked -= SelectDirection;    
-        BlockManager.OnCheatComplete += EndCheat;  
+        BlockManager.OnCheatComplete -= EndCheat; 
+        GameManager.OnPlayerSpawned -= Initialize;
+        GridMovement.OnKeyCollected -= CollectItem;
     }
     private void Awake() 
     {
@@ -37,8 +42,12 @@ public class UIController : MonoBehaviour
             sequenceImages[i].SetActive(false);
         }    
     }
-    private void Start() 
+    private void Initialize() 
     {
+        scoreText.text = "0";
+        dynamiteText.text = GameManager.i.GetDynamiteCount().ToString();
+        keyImage.SetActive(false);
+        playerSpawned = true;
         OnCheckDirections?.Invoke(); 
         EvaluateArrows();   
     }
@@ -64,6 +73,7 @@ public class UIController : MonoBehaviour
 
     private void Update() 
     {
+        if(!playerSpawned) return;
         EvaluateArrows();
         moveInputTimer -= Time.deltaTime;
         if(moveInputTimer <= 0) canAddDirection = true;    
@@ -167,6 +177,15 @@ public class UIController : MonoBehaviour
         else leftArrow.SetActive(false);
         if(GameManager.i.GetMovementScript().GetRightDir()) rightArrow.SetActive(true);
         else rightArrow.SetActive(false);
+    }
+
+    private void CollectItem(ObjectType _object)
+    {
+        if(_object == ObjectType.key) 
+            keyImage.SetActive(true);
+        
+        if(_object == ObjectType.TNT) 
+            dynamiteText.text = GameManager.i.GetDynamiteCount().ToString();
     }
 }
 

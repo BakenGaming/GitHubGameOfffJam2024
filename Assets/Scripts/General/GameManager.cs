@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static event Action OnPlayerSpawned;
     private static GameManager _i;
+    [SerializeField] private int dynamiteCount;
     private Transform spawnPoint;
     private GameObject playerGO;
     private Transform currentSpawnPoint;
@@ -49,7 +51,7 @@ public class GameManager : MonoBehaviour
         playerGO.transform.SetParent(null);
         gridMovement = playerGO.GetComponent<GridMovement>();
         gridMovement.Initialize();
-
+        OnPlayerSpawned?.Invoke();
     }
 
     private void ReSpawnPlayer(HazardType type)
@@ -77,6 +79,8 @@ public class GameManager : MonoBehaviour
     public void UnPauseGame(){if(isPaused) isPaused = false; else return;}
 
     public GridMovement GetMovementScript(){return gridMovement;}
+    public int GetDynamiteCount(){return dynamiteCount;}
+    public void UpdateDynamiteCount(bool _increase){if(_increase) dynamiteCount++; else dynamiteCount--;}
     
     public Transform GetSysMessagePoint(){ return sysMessagePoint;}
     public GameObject GetPlayerGO() { return playerGO; }

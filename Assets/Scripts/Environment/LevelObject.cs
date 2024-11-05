@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ObjectType
 {
-    key, gold, hazard, door
+    key, gold, hazard, door, TNT
 }
 public class LevelObject : MonoBehaviour, IObject
 {

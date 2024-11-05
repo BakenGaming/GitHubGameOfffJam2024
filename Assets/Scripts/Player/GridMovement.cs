@@ -12,6 +12,8 @@ public class GridMovement : MonoBehaviour
 {
     public static event Action<MoveDirections> OnSequenceSelectionAdded;
     public static event Action OnSequenceExecuted;
+    public static event Action<ObjectType> OnKeyCollected;
+    public static event Action<ObjectType> OnTNTCollected;
     private bool isMoving=false, canAddDirection=true, dirU, dirD, dirL, dirR, moveMentComplete=false, movingOver=false;
     private Transform movePoint;
     private Vector3 startingPoint, playerMovePosition;
@@ -242,6 +244,18 @@ public class GridMovement : MonoBehaviour
             Gizmos.DrawWireSphere(new Vector2(movePoint.position.x, movePoint.position.y - 4f), 1f);
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(movePoint.position, 1f);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+        IObject iObject = other.GetComponent<IObject>();
+        if (iObject.GetObjectType() == ObjectType.key)
+            OnKeyCollected?.Invoke(ObjectType.key);
+        if (iObject.GetObjectType() == ObjectType.TNT)
+        {
+            GameManager.i.UpdateDynamiteCount(true);
+            OnTNTCollected?.Invoke(ObjectType.TNT);
+        }
     }
 
 }
