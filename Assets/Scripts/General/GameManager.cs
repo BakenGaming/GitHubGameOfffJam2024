@@ -4,30 +4,40 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
+public class GamePoints
+{
+    public int goldPoints; 
+    public int totalGoldPoints;
+    public int keyPoints;
+    public int deathDeduction;
+    public int noDeathBonus;
+    public int noCheatBonus;
+    public int[] cheatDeductions;
+}
 public class GameManager : MonoBehaviour
 {
+    public static GameManager i { get { return _i; } }
     public static event Action OnPlayerSpawned;
     private static GameManager _i;
-    [SerializeField] private int dynamiteCount;
+    [Header("Point Values")]
+    [SerializeField] private GamePoints gamePoints;
+    private int dynamiteCount, goldCount, levelGoldTotal;
     private Transform spawnPoint;
     private GameObject playerGO;
     private Transform currentSpawnPoint;
-    private Camera mainCam;
     private GridMovement gridMovement;
-    private bool isPaused, flashLightInactive;
+    private PointSystem pointSystem;
+    private bool isPaused;
 
-    public static GameManager i { get { return _i; } }
-    [SerializeField] private Transform sysMessagePoint;
 
     private void OnEnable() 
     {
-        DamageHandler.OnPlayerDie += ReSpawnPlayer; 
-        BlockManager.OnAllBlocksSpawned += Initialize;   
+        BlockManager.OnAllBlocksSpawned += Initialize;  
     }
 
     private void OnDisable() 
     {
-        DamageHandler.OnPlayerDie -= ReSpawnPlayer;    
         BlockManager.OnAllBlocksSpawned -= Initialize;
     }
     private void Awake() 
@@ -36,10 +46,10 @@ public class GameManager : MonoBehaviour
     }
     private void Initialize() 
     {
-        mainCam = Camera.main;
         dynamiteCount = StaticVariables.i.GetGameStats().dynamiteCount;
+        goldCount = 0;
+        pointSystem = new PointSystem();
         SpawnPlayer();
-        SetupObjectPools();  
     }
     public void SetSpawnPoint(Transform _point)
     {
@@ -55,36 +65,28 @@ public class GameManager : MonoBehaviour
         OnPlayerSpawned?.Invoke();
     }
 
-    private void ReSpawnPlayer(HazardType type)
+    private void ReSpawnPlayer()
     {
         playerGO = Instantiate(GameAssets.i.pfPlayer, currentSpawnPoint.position, Quaternion.identity);
         playerGO.transform.SetParent(null);
         playerGO.GetComponent<GridMovement>().Initialize();
     }
 
-
-    public void SetupObjectPools()
-    {
-        //Do the below for all objects that will need pooled for use
-        //ObjectPooler.SetupPool(OBJECT, SIZE, "NAME") == Object is pulled from GameAssets, Setup object with a SO that contains size and name
-        
-        //The below is placed in location where object is needed from pool
-        //==============================
-        //PREFAB_SCRIPT instance = ObjectPooler.DequeueObject<PREFAB_SCRIPT>("NAME");
-        //instance.gameobject.SetActive(true);
-        //instance.Initialize();
-        //==============================
-    }
-
+    //Set Functions
     public void PauseGame(){if(isPaused) return; else isPaused = true;}
     public void UnPauseGame(){if(isPaused) isPaused = false; else return;}
-
-    public GridMovement GetMovementScript(){return gridMovement;}
-    public int GetDynamiteCount(){return dynamiteCount;}
+    public void SetTotalGoldForLevel(int _amount) {levelGoldTotal = _amount;}
+    public void UpdatedGoldCount(){goldCount++;}
     public void UpdateDynamiteCount(bool _increase){if(_increase) dynamiteCount++; else dynamiteCount--;}
-    
-    public Transform GetSysMessagePoint(){ return sysMessagePoint;}
+
+    //Get functions
+    public GridMovement GetMovementScript(){return gridMovement;}
+    public PointSystem GetPointSystem(){return pointSystem;}
+    public GamePoints GetGamePoints(){return gamePoints;}
     public GameObject GetPlayerGO() { return playerGO; }
+    public int GetTotalGoldForLevel(){return levelGoldTotal;}
+    public int GetDynamiteCount(){return dynamiteCount;}
+    public int GetGoldCount(){return goldCount;}
     public bool GetIsPaused() { return isPaused; }
 
 }

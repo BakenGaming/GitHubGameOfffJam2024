@@ -6,6 +6,8 @@ public class LevelObjectManager : MonoBehaviour
 {
     [SerializeField] private List<LevelObject> levelObjects;
 
+    private int goldCount=0;
+
     private void OnEnable() 
     {
         BlockManager.OnBlocksExploded += EnableColliders; 
@@ -23,7 +25,9 @@ public class LevelObjectManager : MonoBehaviour
         foreach (LevelObject _object in levelObjects)
         {
             _object.gameObject.GetComponent<CircleCollider2D>().enabled = false;
+            if(_object.GetObjectType() == ObjectType.gold) goldCount++;
         }
+        GameManager.i.SetTotalGoldForLevel(goldCount);
 
     }
     private void EnableColliders()

@@ -9,7 +9,6 @@ public enum ObjectType
 public class LevelObject : MonoBehaviour, IObject
 {
     [SerializeField] private ObjectType type;
-
     public ObjectType GetObjectType(){return type;}
     
 }

@@ -14,7 +14,7 @@ public class GameStats
 public class StaticVariables : MonoBehaviour
 {
     public static StaticVariables i;
-    [Header("Player Stats")]
+    [Header("Game Stats")]
     [SerializeField] private GameStats gameStats;
 
     [Header("Layer Masks")]

@@ -13,7 +13,7 @@ public class UIController : MonoBehaviour
     public static event Action OnSequenceReset;
     public static event Action OnCheckDirections;
     [SerializeField] private GameObject sequencePanel, cheatPrompt, keyImage;
-    [SerializeField] private TextMeshProUGUI scoreText, dynamiteText;
+    [SerializeField] private TextMeshProUGUI scoreText, dynamiteText, goldText;
     [SerializeField] private GameObject[] sequenceImages;
     [SerializeField] private GameObject upArrow, downArrow, leftArrow, rightArrow;
     private int sequencePositionIndex=0, cheatLevel=0;
@@ -24,16 +24,20 @@ public class UIController : MonoBehaviour
     {
         ArrowButton.OnArrowClicked += SelectDirection;  
         BlockManager.OnCheatComplete += EndCheat;  
+        Block.OnTNTExploded += UpdateDynamiteUI;
         GameManager.OnPlayerSpawned += Initialize;
         GridMovement.OnKeyCollected += CollectItem;
+        GridMovement.OnGoldCollected += CollectItem;
     }
 
     private void OnDisable() 
     {
         ArrowButton.OnArrowClicked -= SelectDirection;    
         BlockManager.OnCheatComplete -= EndCheat; 
+        Block.OnTNTExploded -= UpdateDynamiteUI;
         GameManager.OnPlayerSpawned -= Initialize;
         GridMovement.OnKeyCollected -= CollectItem;
+        GridMovement.OnGoldCollected -= CollectItem;
     }
     private void Awake() 
     {
@@ -46,6 +50,7 @@ public class UIController : MonoBehaviour
     {
         scoreText.text = "0";
         dynamiteText.text = GameManager.i.GetDynamiteCount().ToString();
+        goldText.text = GameManager.i.GetGoldCount().ToString();
         keyImage.SetActive(false);
         playerSpawned = true;
         OnCheckDirections?.Invoke(); 
@@ -179,13 +184,31 @@ public class UIController : MonoBehaviour
         else rightArrow.SetActive(false);
     }
 
+    private void UpdateDynamiteUI()
+    {
+        dynamiteText.text = GameManager.i.GetDynamiteCount().ToString();
+    }
+
+    private void UpdatePointsUI()
+    {
+        scoreText.text = GameManager.i.GetPointSystem().currentPoints.ToString();
+    }
+
     private void CollectItem(ObjectType _object)
     {
         if(_object == ObjectType.key) 
+        {
+            GameManager.i.GetPointSystem().AdjustPointTotal(GameManager.i.GetGamePoints().keyPoints, true);
             keyImage.SetActive(true);
+        }
         
-        if(_object == ObjectType.TNT) 
-            dynamiteText.text = GameManager.i.GetDynamiteCount().ToString();
+        if(_object == ObjectType.gold) 
+        {
+            GameManager.i.UpdatedGoldCount();
+            GameManager.i.GetPointSystem().AdjustPointTotal(GameManager.i.GetGamePoints().goldPoints, true);
+            goldText.text = GameManager.i.GetGoldCount().ToString();
+        }
+        UpdatePointsUI();
     }
 }
 

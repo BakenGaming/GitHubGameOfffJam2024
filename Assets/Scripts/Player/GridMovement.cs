@@ -13,7 +13,7 @@ public class GridMovement : MonoBehaviour
     public static event Action<MoveDirections> OnSequenceSelectionAdded;
     public static event Action OnSequenceExecuted;
     public static event Action<ObjectType> OnKeyCollected;
-    public static event Action<ObjectType> OnTNTCollected;
+    public static event Action<ObjectType> OnGoldCollected;
     private bool isMoving=false, canAddDirection=true, dirU, dirD, dirL, dirR, moveMentComplete=false, movingOver=false;
     private Transform movePoint;
     private Vector3 startingPoint, playerMovePosition;
@@ -26,7 +26,6 @@ public class GridMovement : MonoBehaviour
         movePoint = transform.Find("MovePoint");
         startingPoint = movePoint.position;
         playerMovePosition = startingPoint;
-        Debug.Log(playerMovePosition);
         movePoint.SetParent(null);   
     }
 
@@ -251,13 +250,14 @@ public class GridMovement : MonoBehaviour
         if (iObject.GetObjectType() == ObjectType.key)
         {
             Destroy(other.gameObject);
+            GameManager.i.GetPointSystem().AdjustPointTotal(GameManager.i.GetGamePoints().keyPoints, true);
             OnKeyCollected?.Invoke(ObjectType.key);
         }
-        if (iObject.GetObjectType() == ObjectType.TNT)
+        if (iObject.GetObjectType() == ObjectType.gold)
         {
             Destroy(other.gameObject);
-            GameManager.i.UpdateDynamiteCount(true);
-            OnTNTCollected?.Invoke(ObjectType.TNT);
+            GameManager.i.GetPointSystem().AdjustPointTotal(GameManager.i.GetGamePoints().goldPoints, true);
+            OnGoldCollected?.Invoke(ObjectType.gold);
         }
     }
 
